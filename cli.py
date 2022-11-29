@@ -39,6 +39,12 @@ def isprime(number):
     j = r.json()
     print(j)
 
+def slackalert(stringinput):
+    url = "http://34.134.70.125:4000/slack-alert/" + stringinput
+    r = requests.get(url)
+    j = r.json()
+    print(j)
+
 def keyval_pp(command, key, value):
     url = "http://34.134.70.125:4000/keyval"
     if command == 'post':
@@ -71,10 +77,11 @@ parser = argparse.ArgumentParser(
 ''')
 
 parser.add_argument('COMMAND', nargs='?', default=None, help='Subcommand to run')
-parser.add_argument('-m', nargs='?', type=str, default=None, help='md5 run')
+parser.add_argument('-m', nargs='?', type=str, default=None, help='Enter a string as input to convert it to a MD5 hash')
 parser.add_argument('-f', type=int, help='Enter a number you wish to find their factorial')
 parser.add_argument('-fc', type=int, help='Display an array of integers that are less than or equal to the input number')
 parser.add_argument('-p', type=int, help='Enter a number to determine if it is prime or not')
+parser.add_argument('-s', type=str, help='Add desired string input to send as a Slack alert')
 parser.add_argument('-c', choices=['post','put','get','delete'], help='Enter which command you would like to use to store/retrieve key-value variables: post, put, get, delete')
 parser.add_argument('-k', help='Key of key-value pair')
 parser.add_argument('-v', help='Value of key-value pair')
@@ -97,6 +104,9 @@ if args.fc:
 
 if args.p:
     isprime(str(args.p))
+
+if args.s:
+    slackalert(args.s)
 
 if ((args.c == 'post') or (args.c == 'put')) and args.k and args.v:
     keyval_pp(args.c, str(args.k), str(args.v))
