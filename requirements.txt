@@ -1,0 +1,4 @@
+pip==22.3.1
+argparse==1.4.0
+requests==2.28.1
+
