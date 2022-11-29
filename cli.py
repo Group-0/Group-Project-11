@@ -23,6 +23,12 @@ def md5(stringinput):
     j = r.json()
     print(j)
 
+def factorial(number): 
+    url = "http://34.134.70.125:4000/factorial/" + number
+    r = requests.get(url)
+    j = r.json()
+    print(j)
+
 def isprime(number):
     url = "http://34.134.70.125:4000/is-prime/" + number
     r = requests.get(url)
@@ -47,6 +53,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('COMMAND', nargs='?', default=None, help='Subcommand to run')
 parser.add_argument('-m', nargs='?', type=str, default=None, help='md5 run')
+parser.add_argument('-f', type=int, help='Enter a number you wish to find their factorial')
 parser.add_argument('-isprimenumber', type=int, help='Enter a number to determine if it is prime or not')
 
 
@@ -59,6 +66,9 @@ if not args.COMMAND or not args.COMMAND in CMD_LIST:
 
 if args.m:
     md5(args.m)
+
+if args.f:
+    factorial(str(args.f))
 
 if args.isprimenumber:
     isprime(str(args.isprimenumber))
