@@ -16,8 +16,12 @@ CMD_LIST = {
     'isprime': 'Determines if input number is prime or not prime',
     'slack_alert': 'Post input on Slack'
 }
+
 def md5(stringinput):
-    url = 
+    url = "http://34.134.70.125:4000/md5/" + stringinput
+    r = requests.get(url)
+    j = r.json()
+    print(j)
 
 def isprime(number):
     url = "http://34.134.70.125:4000/is-prime/" + number
@@ -42,7 +46,9 @@ parser = argparse.ArgumentParser(
 ''')
 
 parser.add_argument('COMMAND', nargs='?', default=None, help='Subcommand to run')
-parser.add_argument('isprimenumber', type=int, help='Enter a number to determine if it is prime or not')
+parser.add_argument('-m', nargs='?', type=str, default=None, help='md5 run')
+parser.add_argument('-isprimenumber', type=int, help='Enter a number to determine if it is prime or not')
+
 
 args = parser.parse_args()
 
@@ -50,6 +56,9 @@ if not args.COMMAND or not args.COMMAND in CMD_LIST:
 		print('Unrecognized command')
 		parser.print_help()
 		exit(1)
+
+if args.m:
+    md5(args.m)
 
 if args.isprimenumber:
     isprime(str(args.isprimenumber))
