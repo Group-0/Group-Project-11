@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import subprocess
 import argparse
 import requests
 import json
@@ -14,7 +11,8 @@ CMD_LIST = {
 	'factorial': 'Return the factorial of an input integer',
     'fibonnaci': 'Display an array of integers that are less than or equal to the input number',
     'isprime': 'Determines if input number is prime or not prime',
-    'slack_alert': 'Post input on Slack'
+    'slackalert': 'Post input on Slack',
+    'keyval': 'POST, PUT, GET, DELETE key-value pairs'
 }
 
 def md5(stringinput):
@@ -41,11 +39,26 @@ def isprime(number):
     j = r.json()
     print(j)
 
+def keyval_pp(command, key, value):
+    url = "http://34.134.70.125:4000/keyval"
+    if command == 'post':
+        response = requests.post(url, json={'key': key, 'value': value})
+    elif command == 'put':
+        response = requests.put(url, json={'key': key, 'value': value})
+    j = response.json()
+    print(j)
 
-## if __name__ == '__main__':
+def keyval_gd(command, key):
+    url = "http://34.134.70.125:4000/keyval/" + key
+    if command == 'get':
+        response = requests.get(url)
+    elif command == 'delete':
+        response = requests.delete(url)
+    j = response.json()
+    print(j)
 
 parser = argparse.ArgumentParser(
-	    description='Enter command',
+	    description='Enter command to run followed by [<options>] [value]',
 	    usage='''cli.py COMMAND [<args>],
 
     commands:
@@ -53,16 +66,18 @@ parser = argparse.ArgumentParser(
     factorial            Return the factorial of an input integer
     fibonnaci            Display an array of integers that are less than or equal to the input number
     isprime              Determines if input number is prime or not prime
-    slack_alert          Post input on Slack
-
+    slackalert           Post input on Slack
+    keyval               POST, PUT, GET, DELETE key-value pairs
 ''')
 
 parser.add_argument('COMMAND', nargs='?', default=None, help='Subcommand to run')
 parser.add_argument('-m', nargs='?', type=str, default=None, help='md5 run')
 parser.add_argument('-f', type=int, help='Enter a number you wish to find their factorial')
 parser.add_argument('-fc', type=int, help='Display an array of integers that are less than or equal to the input number')
-parser.add_argument('-isprimenumber', type=int, help='Enter a number to determine if it is prime or not')
-
+parser.add_argument('-p', type=int, help='Enter a number to determine if it is prime or not')
+parser.add_argument('-c', choices=['post','put','get','delete'], help='Enter which command you would like to use to store/retrieve key-value variables: post, put, get, delete')
+parser.add_argument('-k', help='Key of key-value pair')
+parser.add_argument('-v', help='Value of key-value pair')
 
 args = parser.parse_args()
 
@@ -80,6 +95,10 @@ if args.f:
 if args.fc:
     fibonnaci(str(args.fc))
 
-if args.isprimenumber:
-    isprime(str(args.isprimenumber))
+if args.p:
+    isprime(str(args.p))
 
+if ((args.c == 'post') or (args.c == 'put')) and args.k and args.v:
+    keyval_pp(args.c, str(args.k), str(args.v))
+elif ((args.c == 'get') or (args.c == 'delete')) and args.k:
+    keyval_gd(args.c, str(args.k))
