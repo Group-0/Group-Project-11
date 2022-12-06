@@ -23,26 +23,26 @@ def md5(stringinput):
     j = r.json()
     print(j)
 
-def factorial(number): 
-    url = "http://34.134.70.125:4000/factorial/" + number
+def factorial(number):
+    url = f'{API_URL}factorial/{number}
     r = requests.get(url)
     j = r.json()
     print(j)
 
 def fibonnaci(number):
-    url = "http://34.134.70.125:4000/fibonacci/" + number
+    url = f'{API_URL}fibonacci/{number}
     r = requests.get(url)
     j = r.json()
     print(j)
 
 def isprime(number):
-    url = "http://34.134.70.125:4000/is-prime/" + number
+    url = f'{API_URL}is-prime/{number}
     r = requests.get(url)
     j = r.json()
     print(j)
 
 def slackalert(stringinput):
-    url = "http://34.134.70.125:4000/slack-alert/" + stringinput
+    url = f'{API_URL}slack-alert/{stringinput}
     r = requests.get(url)
     j = r.json()
     print(j)
