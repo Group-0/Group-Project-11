@@ -57,7 +57,7 @@ def keyval_pp(command, key, value):
     print(j)
 
 def keyval_gd(command, key):
-    url = "http://34.134.70.125:4000/keyval/" + key
+    url = f'{API_URL}keyval/{command, key}'
     if command == 'get':
         response = requests.get(url)
     elif command == 'delete':
