@@ -24,25 +24,25 @@ def md5(stringinput):
     print(j)
 
 def factorial(number):
-    url = f'{API_URL}factorial/{number}
+    url = f'{API_URL}factorial/{number}'
     r = requests.get(url)
     j = r.json()
     print(j)
 
 def fibonnaci(number):
-    url = f'{API_URL}fibonacci/{number}
+    url = f'{API_URL}fibonacci/{number}'
     r = requests.get(url)
     j = r.json()
     print(j)
 
 def isprime(number):
-    url = f'{API_URL}is-prime/{number}
+    url = f'{API_URL}is-prime/{number}'
     r = requests.get(url)
     j = r.json()
     print(j)
 
 def slackalert(stringinput):
-    url = f'{API_URL}slack-alert/{stringinput}
+    url = f'{API_URL}slack-alert/{stringinput}'
     r = requests.get(url)
     j = r.json()
     print(j)
