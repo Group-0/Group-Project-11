@@ -15,7 +15,7 @@ CMD_LIST = {
     'keyval': 'POST, PUT, GET, DELETE key-value pairs'
 }
 
-API_URL = "http://34.134.70.125/"
+API_URL = "http://34.134.70.125:4000/"
 
 def md5(stringinput):
     url = f'{API_URL}md5/{stringinput}'
